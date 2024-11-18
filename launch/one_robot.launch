@@ -4,10 +4,14 @@
 
   <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model $(arg robot_name) $(arg init_pose) -param /robot_description" />
 
-     <!--respawn="false" output="screen" />-->
+   <!--respawn="false" output="screen" />-->
+     <include file="$(find turtlebot3_bringup)/launch/includes/description.launch.xml">
+    <arg name="model" value="burger" />
+  </include>
 
-    <!--<node pkg="robot_state_publisher" type="state_publisher"
-          name="robot_state_publisher" output="screen"/>-->
+
+    <node pkg="robot_state_publisher" type="robot_state_publisher"
+          name="robot_state_publisher" output="screen" />
 
     <!-- The odometry estimator, throttling, fake laser etc. go here -->
     <!-- All the stuff as from usual robot launch file -->

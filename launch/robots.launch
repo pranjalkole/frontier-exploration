@@ -6,7 +6,16 @@
 
   <!-- BEGIN ROBOT 1-->
   <group ns="robot1">
+  <node pkg="gmapping" type="slam_gmapping" name="robot1_slam_gmapping" output="screen" args="scan:=/robot1/scan">
+    <param name="base_frame" value="/robot1_tf/base_footprint"/>
+    <param name="odom_frame" value="/robot1_tf/odom"/>
+    <param name="map_frame"  value="/robot1_tf/map"/>
+    <rosparam command="load" file="$(find turtlebot3_slam)/config/gmapping_params.yaml" />
+  </node>
     <param name="tf_prefix" value="robot1_tf" />
+    <param name="amcl/initial_pose_x" value="1" />
+    <param name="amcl/initial_pose_y" value="1" />
+    <include file="$(find multiple_turtlebot3)/launch/move_base.launch" />
     <include file="$(find multiple_turtlebot3)/launch/one_robot.launch" >
       <arg name="init_pose" value="-x 1 -y 1 -z 0" />
       <arg name="robot_name"  value="Robot1" />
@@ -15,7 +24,16 @@
 
   <!-- BEGIN ROBOT 2-->
   <group ns="robot2">
+  <node pkg="gmapping" type="slam_gmapping" name="robot2_slam_gmapping" output="screen" args="scan:=/robot2/scan">
+    <param name="base_frame" value="/robot2_tf/base_footprint"/>
+    <param name="odom_frame" value="/robot2_tf/odom"/>
+    <param name="map_frame"  value="/robot2_tf/map"/>
+    <rosparam command="load" file="$(find turtlebot3_slam)/config/gmapping_params.yaml" />
+  </node>
     <param name="tf_prefix" value="robot2_tf" />
+    <param name="amcl/initial_pose_x" value="-1" />
+    <param name="amcl/initial_pose_y" value="1" />
+    <include file="$(find multiple_turtlebot3)/launch/move_base.launch" />
     <include file="$(find multiple_turtlebot3)/launch/one_robot.launch" >
       <arg name="init_pose" value="-x -1 -y 1 -z 0" />
       <arg name="robot_name"  value="Robot2" />

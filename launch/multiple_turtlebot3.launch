@@ -20,22 +20,8 @@
     <param name="frame_id" value="/map" />
   </node>-->
 
-  <group ns="robot1">
-    <param name="tf_prefix" value="robot1_tf" />
-    <param name="amcl/initial_pose_x" value="1" />
-    <param name="amcl/initial_pose_y" value="1" />
-    <include file="$(find multiple_turtlebot3)/launch/move_base.launch" />
-  </group>
-
-  <group ns="robot2">
-    <param name="tf_prefix" value="robot2_tf" />
-    <param name="amcl/initial_pose_x" value="-1" />
-    <param name="amcl/initial_pose_y" value="1" />
-    <include file="$(find multiple_turtlebot3)/launch/move_base.launch" />
-  </group>
-
-  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find multiple_turtlebot3)/config/multi.vcg"
-   output="screen" />
+  <!--<node pkg="rviz" type="rviz" name="rviz" args="-d $(find multiple_turtlebot3)/config/multi.vcg"
+   output="screen" />-->
 
   <!-- include our robots -->
   <include file="$(find multiple_turtlebot3)/launch/robots.launch"/>
