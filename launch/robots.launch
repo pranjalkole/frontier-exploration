@@ -15,11 +15,17 @@
     <param name="tf_prefix" value="robot1_tf" />
     <param name="amcl/initial_pose_x" value="1" />
     <param name="amcl/initial_pose_y" value="1" />
-    <include file="$(find multiple_turtlebot3)/launch/move_base.launch" />
+    <include file="$(find multiple_turtlebot3)/launch/move_base.launch">
+      <arg name="robotname"  value="r1" />
+    </include>
     <include file="$(find multiple_turtlebot3)/launch/one_robot.launch" >
       <arg name="init_pose" value="-x 1 -y 1 -z 0" />
       <arg name="robot_name"  value="Robot1" />
     </include>
+    <node pkg="explore_lite" type="explore" respawn="false" name="explore" output="screen">
+  <param name="robot_base_frame" value="/robot1_tf/base_footprint"/>
+  <param name="costmap_topic" value="/map_merge/map"/>
+</node>
   </group>
 
   <!-- BEGIN ROBOT 2-->
@@ -33,10 +39,18 @@
     <param name="tf_prefix" value="robot2_tf" />
     <param name="amcl/initial_pose_x" value="-1" />
     <param name="amcl/initial_pose_y" value="1" />
-    <include file="$(find multiple_turtlebot3)/launch/move_base.launch" />
+    <include file="$(find multiple_turtlebot3)/launch/move_base.launch">
+      <arg name="robotname"  value="r2" />
+    </include>
     <include file="$(find multiple_turtlebot3)/launch/one_robot.launch" >
       <arg name="init_pose" value="-x -1 -y 1 -z 0" />
       <arg name="robot_name"  value="Robot2" />
     </include>
+    <node pkg="explore_lite" type="explore" respawn="false" name="explore" output="screen">
+  <param name="robot_base_frame" value="/robot2_tf/base_footprint"/>
+  <param name="costmap_topic" value="/map_merge/map"/>
+</node>
   </group>
+    <node pkg="tf" type="static_transform_publisher" name="world_to_robot1_tf_broadcaster"  args="0 0 0 0 0 0 /world /robot1_tf/map 100"/>
+    <node pkg="tf" type="static_transform_publisher" name="world_to_robot2_tf_broadcaster" args="0 0 0 0 0 0 /world /robot2_tf/map 100"/>
 </launch>
